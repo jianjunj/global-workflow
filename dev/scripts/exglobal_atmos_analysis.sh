@@ -55,6 +55,7 @@ optconv=${optconv:-0.06}
 AIRS_CADS=${AIRS_CADS:-".false."}
 IASI_CADS=${IASI_CADS:-".false."}
 CRIS_CADS=${CRIS_CADS:-".false."}
+AMSR2_RFI==${AMSR2_RFI:-"NO"}
 
 # Diagnostic files options
 lobsdiag_forenkf=${lobsdiag_forenkf:-".false."}
@@ -113,7 +114,11 @@ IASIBF=${IASIBF:-${COMIN_OBS}/${OPREFIX}mtiasi.tm00.bufr_d${OSUFFIX}}
 ESIASI=${ESIASI:-${COMIN_OBS}/${OPREFIX}esiasi.tm00.bufr_d${OSUFFIX}}
 IASIDB=${IASIDB:-${COMIN_OBS}/${OPREFIX}iasidb.tm00.bufr_d${OSUFFIX}}
 AMSREBF=${AMSREBF:-${COMIN_OBS}/${OPREFIX}amsre.tm00.bufr_d${OSUFFIX}}
-AMSR2BF=${AMSR2BF:-${COMIN_OBS}/${OPREFIX}amsr2.tm00.bufr_d${OSUFFIX}}
+if [[ "${AMSR2_RFI}" == "YES" ]]; then
+   AMSR2BF=${AMSR2BF:-${COMIN_OBSAMSR2}/${OPREFIX}amsr2.tm00.bufr_d${OSUFFIX}}
+else
+   AMSR2BF=${AMSR2BF:-${COMIN_OBS}/${OPREFIX}amsr2.tm00.bufr_d${OSUFFIX}}
+fi
 GMI1CRBF=${GMI1CRBF:-${COMIN_OBS}/${OPREFIX}gmi1cr.tm00.bufr_d${OSUFFIX}}
 SAPHIRBF=${SAPHIRBF:-${COMIN_OBS}/${OPREFIX}saphir.tm00.bufr_d${OSUFFIX}}
 SEVIRIBF=${SEVIRIBF:-${COMIN_OBS}/${OPREFIX}sevcsr.tm00.bufr_d${OSUFFIX}}

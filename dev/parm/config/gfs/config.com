@@ -42,6 +42,9 @@ if [[ "${RUN_ENVIR:-emc}" == "nco" ]]; then
     COM_TCVITAL_TMPL=$(compath.py "${envir}/gfs/${gfs_ver}")'/${RUN}.${YMD}/${HH}/atmos'
 else
     COM_OBSPROC_TMPL='${DMPDIR}/${RUN}${DUMP_SUFFIX}.${YMD}/${HH}/atmos'
+    AMSR2_BUFR_DIR='/lfs/h2/emc/da/noscrub/jianjun.jin/obs_data/amsr2_bufr/gdas_dmp/'
+    COM_OBSAMSR2_TMPL='${AMSR2_BUFR_DIR}/gdas.${YMD}/${HH}/atmos'
+    declare -rx  COM_OBSAMSR2_TMPL
     COM_OBSFORGE_TMPL='${IODADIR}/${RUN}${DUMP_SUFFIX}.${YMD}/${HH}'
     COM_RTOFS_TMPL='${DMPDIR}'
     COM_TCVITAL_TMPL='${DMPDIR}/${RUN}.${YMD}/${HH}/atmos'

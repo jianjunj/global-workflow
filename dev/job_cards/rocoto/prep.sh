@@ -30,6 +30,7 @@ export OPREFIX="${RUN_local}.t${cyc}z."
 
 RUN=${RUN_local} YMD=${PDY} HH=${cyc} declare_from_tmpl -rx \
     COMIN_OBS:COM_OBS_TMPL \
+    COMIN_OBSAMSR2:COM_OBSAMSR2_TMPL \
     COMOUT_OBS:COM_OBS_TMPL \
     COMINobsproc:COM_OBSPROC_TMPL \
     COMINobsforge:COM_OBSFORGE_TMPL \
@@ -146,6 +147,7 @@ export job="j${RUN_local}_prep_${cyc}"
 #TODO: Update external packages (obsproc/prepobs) to use COMIN[OUT]_*
 export COMINtcvital=${COMIN_TCVITAL}
 export COMIN=${COMIN_OBS}
+export COMINAMSR2=${COMIN_OBSAMSR2}
 export COMOUT=${COMOUT_OBS}
 export COMINgdas=${COMIN_ATMOS_HISTORY_GDAS}
 export COMINgfs=${COMIN_ATMOS_HISTORY_GFS}
