@@ -156,6 +156,7 @@ OMPSLPNC=${OMPSLPNC:-${COMIN_OBS}/OMPS-LPoz-Vis.${PDY}_${cyc}z.nc}
 MLS55NC=${MLS55NC:-${COMIN_OBS}/MLS-v5.0-oz.${PDY}_${cyc}z.nc}
 SAILDRONE=${SAILDRONE:-${COMIN_OBS}/${OPREFIX}saldrn.tm00.bufr_d${OSUFFIX}}
 GSBBF=${GSBBF:-${COMIN_OBS}/${OPREFIX}gsbpfl.tm00.bufr_d${OSUFFIX}}
+MWSBF=${MWSBF:-${COMIN_OBS}/${OPREFIX}msmws.tm00.bufr_d${OSUFFIX}}
 
 # Guess files
 GPREFIX=${GPREFIX:-""}
@@ -290,6 +291,7 @@ SATANGL=${SATANGL:-${FIXglobal}/gsi/global_satangbias.txt}
 SATINFO=${SATINFO:-${FIXglobal}/gsi/global_satinfo.txt}
 RADCLOUDINFO=${RADCLOUDINFO:-${FIXglobal}/gsi/cloudy_radiance_info.txt}
 ATMSFILTER=${ATMSFILTER:-${FIXglobal}/gsi/atms_beamwidth.txt}
+MWSSFILTER=${MWSFILTER:-${FIXglobal}/gsi/mws_beamwidth.txt}
 ANAVINFO=${ANAVINFO:-${FIXglobal}/gsi/global_anavinfo.l${LEVS}.txt}
 CONVINFO=${CONVINFO:-${FIXglobal}/gsi/global_convinfo.txt}
 vqcdat=${vqcdat:-${FIXglobal}/gsi/vqctp001.dat}
@@ -360,6 +362,7 @@ else
 fi
 ${NLN} "${RADCLOUDINFO}" cloudy_radiance_info.txt
 ${NLN} "${ATMSFILTER}" atms_beamwidth.txt
+${NLN} "${MWSFILTER}" mws_beamwidth.txt
 ${NLN} "${ANAVINFO}" anavinfo
 if [[ "${CONVINFO}" == "generate" ]]; then
     "${USHglobal}/create_gsi_info.sh" conv "${PDY}${cyc}" "${DATA}" "${USE_2M_OBS}"
@@ -526,6 +529,7 @@ ${NLN} "${HDOB}" hdobbufr
 ${NLN} "${SSTVIIRS}" sstviirs
 ${NLN} "${SAILDRONE}" sdbufr
 ${NLN} "${GSBBF}" wbbufr
+${NLN} "${MWSBF}" mwsbufr
 
 # NASA ozone (netcdf) from NNJA
 ${NLN} "${OMIEFFNC}" omieffnc
