@@ -298,6 +298,7 @@ cat > enkf.nml << EOFnml
    sattypes_rad(78)= 'atms_n21',      dsis(78)= 'atms_n21',
    sattypes_rad(79)= 'cris-fsr_n21',  dsis(79)= 'cris-fsr_n21',
    sattypes_rad(80)= 'abi_g19',       dsis(80)= 'abi_g19',
+   sattypes_rad(81)= 'mws_metop-sg-a1', dsis(81)= 'mws_metop-sg-a1',
    ${SATOBS_ENKF:-}
 /
 &ozobs_enkf

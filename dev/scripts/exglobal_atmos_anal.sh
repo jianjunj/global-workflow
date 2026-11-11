@@ -156,6 +156,7 @@ OMPSLPNC=${OMPSLPNC:-${COMIN_OBS}/OMPS-LPoz-Vis.${PDY}_${cyc}z.nc}
 MLS55NC=${MLS55NC:-${COMIN_OBS}/MLS-v5.0-oz.${PDY}_${cyc}z.nc}
 SAILDRONE=${SAILDRONE:-${COMIN_OBS}/${OPREFIX}saldrn.tm00.bufr_d${OSUFFIX}}
 GSBBF=${GSBBF:-${COMIN_OBS}/${OPREFIX}gsbpfl.tm00.bufr_d${OSUFFIX}}
+MWSBF=${MWSBF:-${COMIN_OBS}/${OPREFIX}msmws.tm00.bufr_d${OSUFFIX}}
 
 # Guess files
 GPREFIX=${GPREFIX:-""}
@@ -290,6 +291,7 @@ SATANGL=${SATANGL:-${FIXglobal}/gsi/global_satangbias.txt}
 SATINFO=${SATINFO:-${FIXglobal}/gsi/global_satinfo.txt}
 RADCLOUDINFO=${RADCLOUDINFO:-${FIXglobal}/gsi/cloudy_radiance_info.txt}
 ATMSFILTER=${ATMSFILTER:-${FIXglobal}/gsi/atms_beamwidth.txt}
+MWSFILTER=${MWSFILTER:-${FIXglobal}/gsi/mws_beamwidth.txt}
 ANAVINFO=${ANAVINFO:-${FIXglobal}/gsi/global_anavinfo.l${LEVS}.txt}
 CONVINFO=${CONVINFO:-${FIXglobal}/gsi/global_convinfo.txt}
 vqcdat=${vqcdat:-${FIXglobal}/gsi/vqctp001.dat}
@@ -302,6 +304,7 @@ HYBENSINFO=${HYBENSINFO:-${FIXglobal}/gsi/global_hybens_info.l${LEVS}.txt}
 OBERROR=${OBERROR:-${FIXglobal}/gsi/prepobs_errtable.global}
 OBS_INPUT=${OBS_INPUT:-${BUILD_GSINFO_DIR}/obs_input/obs_input_ops.txt}
 HIRS_FIX=${HIRS_FIX:-${CRTM_FIX}}
+MWS_FIX=${MWS_FIX:-${CRTM_FIX}}
 BLACKLST=${BLACKLST:-${FIXglobal}/gsi/rejectlist_global.txt}
 
 # GSI namelist
@@ -360,6 +363,7 @@ else
 fi
 ${NLN} "${RADCLOUDINFO}" cloudy_radiance_info.txt
 ${NLN} "${ATMSFILTER}" atms_beamwidth.txt
+${NLN} "${MWSFILTER}" mws_beamwidth.txt
 ${NLN} "${ANAVINFO}" anavinfo
 if [[ "${CONVINFO}" == "generate" ]]; then
     "${USHglobal}/create_gsi_info.sh" conv "${PDY}${cyc}" "${DATA}" "${USE_2M_OBS}"
@@ -431,10 +435,16 @@ mkdir -p crtm_coeffs
 for file in $(awk '{if($1!~"!"){print $1}}' satinfo | sort | uniq); do
     if [[ ${file:0:4} == "hirs" ]]; then
         ${NLN} "${HIRS_FIX}/${file}.SpcCoeff.bin" "./crtm_coeffs/${file}.SpcCoeff.bin"
+    elif [[ ${file:0:3} == "mws" ]]; then
+        ${NLN} "${MWS_FIX}/${file}.SpcCoeff.bin" "./crtm_coeffs/${file}.SpcCoeff.bin"
     else
         ${NLN} "${CRTM_FIX}/${file}.SpcCoeff.bin" "./crtm_coeffs/${file}.SpcCoeff.bin"
     fi
-    ${NLN} "${CRTM_FIX}/${file}.TauCoeff.bin" "./crtm_coeffs/${file}.TauCoeff.bin"
+    if [[ ${file:0:3} == "mws" ]]; then
+        ${NLN} "${MWS_FIX}/${file}.TauCoeff.bin" "./crtm_coeffs/${file}.TauCoeff.bin"
+    else
+        ${NLN} "${CRTM_FIX}/${file}.TauCoeff.bin" "./crtm_coeffs/${file}.TauCoeff.bin"
+    fi	    
 done
 ${NLN} "${CRTM_FIX}/amsua_metop-a_v2.SpcCoeff.bin" "./crtm_coeffs/amsua_metop-a_v2.SpcCoeff.bin"
 
@@ -526,6 +536,7 @@ ${NLN} "${HDOB}" hdobbufr
 ${NLN} "${SSTVIIRS}" sstviirs
 ${NLN} "${SAILDRONE}" sdbufr
 ${NLN} "${GSBBF}" wbbufr
+${NLN} "${MWSBF}" mwsbufr
 
 # NASA ozone (netcdf) from NNJA
 ${NLN} "${OMIEFFNC}" omieffnc
